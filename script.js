@@ -1,107 +1,84 @@
-// DOM Elements
+// Smooth Scrolling
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    document.querySelector(this.getAttribute('href')).scrollIntoView({
+      behavior: 'smooth'
+    });
+  });
+});
+
+// Modal Logic
 const loginBtn = document.getElementById('login-btn');
 const logoutBtn = document.getElementById('logout-btn');
 const loginForm = document.getElementById('login-form');
 const registerForm = document.getElementById('register-form');
 const recoveryForm = document.getElementById('recovery-form');
-const content = document.getElementById('content');
-const registerLink = document.getElementById('register-link');
-const loginLink = document.getElementById('login-link');
-const forgotPasswordLink = document.getElementById('forgot-password-link');
-const backToLogin = document.getElementById('back-to-login');
+const closeButtons = document.querySelectorAll('.close');
 
-// Show login form
+// Show Login Modal
 loginBtn.addEventListener('click', () => {
-  loginForm.style.display = 'block';
-  registerForm.style.display = 'none';
-  recoveryForm.style.display = 'none';
-  content.style.display = 'none';
+  loginForm.style.display = 'flex';
 });
 
-// Show registration form
-registerLink.addEventListener('click', (e) => {
+// Show Registration Modal
+document.getElementById('register-link').addEventListener('click', (e) => {
   e.preventDefault();
   loginForm.style.display = 'none';
-  registerForm.style.display = 'block';
-  recoveryForm.style.display = 'none';
-  content.style.display = 'none';
+  registerForm.style.display = 'flex';
 });
 
-// Show recovery form
-forgotPasswordLink.addEventListener('click', (e) => {
+// Show Recovery Modal
+document.getElementById('forgot-password-link').addEventListener('click', (e) => {
   e.preventDefault();
   loginForm.style.display = 'none';
-  registerForm.style.display = 'none';
-  recoveryForm.style.display = 'block';
-  content.style.display = 'none';
+  recoveryForm.style.display = 'flex';
 });
 
-// Back to login from recovery
-backToLogin.addEventListener('click', (e) => {
+// Back to Login from Recovery
+document.getElementById('back-to-login').addEventListener('click', (e) => {
   e.preventDefault();
-  loginForm.style.display = 'block';
-  registerForm.style.display = 'none';
   recoveryForm.style.display = 'none';
-  content.style.display = 'none';
+  loginForm.style.display = 'flex';
 });
 
-// Handle login form submission
+// Close Modals
+closeButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    loginForm.style.display = 'none';
+    registerForm.style.display = 'none';
+    recoveryForm.style.display = 'none';
+  });
+});
+
+// Handle Login Form Submission
 document.getElementById('loginForm').addEventListener('submit', (e) => {
   e.preventDefault();
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
-
-  // Simulate login (no backend)
-  if (username && password) {
-    alert(`Welcome, ${username}!`);
-    loginForm.style.display = 'none';
-    content.style.display = 'block';
-    loginBtn.style.display = 'none';
-    logoutBtn.style.display = 'inline-block';
-  } else {
-    alert('Please enter a username and password.');
-  }
+  alert('Login successful!');
+  loginForm.style.display = 'none';
+  loginBtn.style.display = 'none';
+  logoutBtn.style.display = 'inline-block';
 });
 
-// Handle registration form submission
+// Handle Registration Form Submission
 document.getElementById('registerForm').addEventListener('submit', (e) => {
   e.preventDefault();
-  const username = document.getElementById('reg-username').value;
-  const email = document.getElementById('reg-email').value;
-  const password = document.getElementById('reg-password').value;
-
-  // Simulate registration (no backend)
-  if (username && email && password) {
-    alert(`Registration successful! Welcome, ${username}.`);
-    registerForm.style.display = 'none';
-    loginForm.style.display = 'block';
-  } else {
-    alert('Please fill out all fields.');
-  }
+  alert('Registration successful!');
+  registerForm.style.display = 'none';
+  loginForm.style.display = 'flex';
 });
 
-// Handle recovery form submission
+// Handle Recovery Form Submission
 document.getElementById('recoveryForm').addEventListener('submit', (e) => {
   e.preventDefault();
-  const email = document.getElementById('recovery-email').value;
-
-  // Simulate password recovery (no backend)
-  if (email) {
-    alert(`Password recovery instructions sent to ${email}.`);
-    recoveryForm.style.display = 'none';
-    loginForm.style.display = 'block';
-  } else {
-    alert('Please enter your email.');
-  }
+  alert('Password recovery instructions sent!');
+  recoveryForm.style.display = 'none';
+  loginForm.style.display = 'flex';
 });
 
-// Handle logout
+// Handle Logout
 logoutBtn.addEventListener('click', () => {
   alert('You have been logged out.');
   loginBtn.style.display = 'inline-block';
   logoutBtn.style.display = 'none';
-  content.style.display = 'block';
-  loginForm.style.display = 'none';
-  registerForm.style.display = 'none';
-  recoveryForm.style.display = 'none';
 });
